@@ -1,0 +1,21 @@
+.subScribe{
+    width: 260px;
+    height:4rem;
+    border-radius: 2rem;
+    border:0;
+    background-color: var(--Yellow-500);
+    color: var(--gray-900);
+    font-weight: bold;
+    font-size: 1.25rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: filter 0.2s;
+    &:hover{
+
+        filter: brightness(0.8)
+    }
+
+}

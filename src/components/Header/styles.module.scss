@@ -1,0 +1,53 @@
+.headerContainer{
+height: 5rem;
+border-bottom: 1px solid var(--gray-800);
+}
+.headerContent{
+    display: flex;
+    align-items: center;
+ max-width: 1120px;
+ height: 5rem;
+ margin:  0 auto;;
+ padding: 0 2rem;
+
+ nav{
+    height: 5rem;
+    margin-left: 5rem; 
+ }
+
+ a{
+     display: inline-block;
+     position: relative;
+ height: 5rem;
+ padding: 0 0.5rem;
+ line-height: 5rem;
+ color: var(--gray-300);
+ transition: color 1.5s;
+
+ &:hover{
+     color: var(--white);
+ }
+
+ &.active{
+    color: var(--white);
+}
+
+ &.active::after{
+     content: "";
+     height: 3px;
+     position:absolute;
+     left: 0;
+     bottom: 0;
+     border-radius: 3px 3px 0 0;
+     background: var(--Yellow-500);
+     width: 100%;
+
+ }
+ &+a{
+     margin-left: 2rem;
+ }
+ }
+ >button{
+     margin-left: auto;
+ }
+}
