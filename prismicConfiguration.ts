@@ -1,5 +1,5 @@
 // -- Prismic Repo Name
-export const repoName = 'ignewsEr'
+export const repoName = 'ignewser'
 
 // -- Prismic API endpoint
 // Determines which repository to query and fetch data from

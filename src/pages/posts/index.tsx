@@ -1,6 +1,7 @@
-import { Client } from '../../../utils/prismicHelpers'
-import Prismic from '@prismicio/client'
-import { homePageQuery , queryRepeatableDocuments} from '../../../utils/queries'
+// import { Client } from '../../../utils/prismicHelpers'
+import { homePageQuery } from '../../../utils/queries'
+// import Prismic from '@prismicio/client'
+
 
 
 
@@ -40,7 +41,8 @@ export default function Posts(){
 }
 export async function   getStaticProps () {     
 
-    const posts = await Client().query(Prismic.Predicates.at("document.type", "post"))
+    const posts = await homePageQuery()
+
   
     return  {
      Props:{
