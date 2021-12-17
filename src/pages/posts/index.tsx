@@ -45,7 +45,7 @@ export async function   getStaticProps () {
     // const posts = await Client().query('', { pageSize: 100, lang: '*' });
     const posts = await Client().query(Prismic.Predicates.at("document.type", "post"))
 
-console.log(posts)
+console.log(JSON.stringify(posts, null, 2))
   
     return  {
     
