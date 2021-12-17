@@ -1,6 +1,6 @@
-// import { Client } from '../../../utils/prismicHelpers'
+import { Client } from '../../../utils/prismicHelpers'
 import { homePageQuery } from '../../../utils/queries'
-// import Prismic from '@prismicio/client'
+import Prismic from '@prismicio/client'
 
 
 
@@ -41,12 +41,15 @@ export default function Posts(){
 }
 export async function   getStaticProps () {     
 
-    const posts = await homePageQuery()
+    // const posts = await homePageQuery()
+    // const posts = await Client().query('', { pageSize: 100, lang: '*' });
+    const posts = await Client().query(Prismic.Predicates.at("document.type", "post"))
 
+console.log(posts)
   
     return  {
-     Props:{
-
-     }
+    
+        props: { posts }
+    
     }
   }
