@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next"
 import { getSession} from "next-auth/react"
 import { Client } from '../../../utils/prismicHelpers'
 import {RichText} from 'prismic-dom'
+import stylespost from './stylespost.module.scss'
 
 import  Head from 'next/head'
 
@@ -21,10 +22,13 @@ return(
     <Head>
         <title>{post.title} | ignews</title>
     </Head>
-    <main>
-        <article>
+    <main className={stylespost.container}> 
+        <article className={stylespost.post}>
             <h1>{post.title}</h1>
-            <div dangerouslySetInnerHTML={{__html: post.content}}/>
+            <time>{post.updatedAt}</time>
+            <div
+             className={stylespost.content} 
+             dangerouslySetInnerHTML={{__html: post.content}}/>
 
         </article>
     </main>
@@ -35,7 +39,17 @@ return(
 
 export const getServerSideProps : GetServerSideProps = async ({req, params})=>{
     const session = await getSession({req})
+    console.log(session)
     const { slug } = params
+
+    if(!session?.activeSubscription){
+        return{
+            redirect:{
+                destination:'/',
+                permanent:false
+            }
+        }
+    }
 
     const response = await Client(req).getByUID('post', String(slug),{})
     const post = {
