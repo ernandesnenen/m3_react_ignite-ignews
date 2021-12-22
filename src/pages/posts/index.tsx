@@ -1,6 +1,8 @@
 import { Client } from '../../../utils/prismicHelpers'
-import { homePageQuery } from '../../../utils/queries'
+import Link from 'next/link'
+
 import Prismic from '@prismicio/client'
+import {RichText} from 'prismic-dom'
 
 
 
@@ -9,8 +11,19 @@ import Prismic from '@prismicio/client'
 import  Head  from 'next/head'
 import styles from './styles.module.scss'
 
+type Post = {
+    slug: string;
+    title:string;
+    excerpt: string;
+    updatedAt: string
+}
 
-export default function Posts(){
+interface PostsPros{
+   posts: Post[]
+}
+
+
+export default function Posts({posts}:PostsPros){
     return(
         <>
         <Head>
@@ -18,21 +31,15 @@ export default function Posts(){
         </Head>
         <main className={styles.container}>
             <div className={styles.posts}>
-                <a>
-                    <time>12 de maio 2021</time>
-                    <strong>xxxxxxxxxxxxxxxxxxxxxxx</strong>
-                    <p>pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp</p>
-                </a>
-                <a>
-                    <time>12 de maio 2021</time>
-                    <strong>xxxxxxxxxxxxxxxxxxxxxxx</strong>
-                    <p>pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp</p>
-                </a>
-                <a>
-                    <time>12 de maio 2021</time>
-                    <strong>xxxxxxxxxxxxxxxxxxxxxxx</strong>
-                    <p>pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp</p>
-                </a>
+                {posts.map(post=>(
+                    <Link href={`/posts/${post.slug}`}>
+                        <a key={post.slug}>
+                            <time>{post.updatedAt}</time>
+                            <strong>{post.title}</strong>
+                            <p>{post.excerpt}</p>
+                        </a>
+                    </Link>
+                ))}
             </div>
         </main>
      
@@ -43,9 +50,21 @@ export async function   getStaticProps () {
 
     // const posts = await homePageQuery()
     // const posts = await Client().query('', { pageSize: 100, lang: '*' });
-    const posts = await Client().query(Prismic.Predicates.at("document.type", "post"))
+    const response = await Client().query(Prismic.Predicates.at("document.type", "post"))
 
-console.log(JSON.stringify(posts, null, 2))
+// console.log(JSON.stringify(posts, null, 2))
+const posts = response.results.map(post =>{
+    return{
+        slug: post.uid,
+        title: RichText.asText(post.data.title),
+        excerpt: post.data.content.find(content => content.type === 'paragraph')?.text??'',
+        updatedAt: new Date(post.last_publication_date).toLocaleDateString('pt-br',{
+            day: '2-digit',
+            month:'long',
+            year: 'numeric'
+        })
+    }
+})
   
     return  {
     
