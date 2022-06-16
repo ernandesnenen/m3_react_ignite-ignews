@@ -60,7 +60,7 @@ return(
 export const getStaticPaths: GetStaticPaths = async()=>{
 return{
     paths:[
-       { params:{}}
+       { params:{slug:"Obtendo o status de progresso do envio de dados com Axios"}}
     ],
     fallback: true
 }
