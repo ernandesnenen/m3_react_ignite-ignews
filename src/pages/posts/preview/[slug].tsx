@@ -60,7 +60,7 @@ return(
 export const getStaticPaths: GetStaticPaths = async()=>{
 return{
     paths:[
-       { params:{slug:"mapas-com-react-usando-leaflet1112"}}
+       { params:{slug:"Obtendo o status de progresso do envio de dados com Axios"}}
     ],
     fallback: 'blocking'
 }
