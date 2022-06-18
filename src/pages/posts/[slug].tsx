@@ -5,6 +5,7 @@ import {RichText} from 'prismic-dom'
 import stylespost from './stylespost.module.scss'
 
 import  Head from 'next/head'
+import { createClient } from "../../../prismicio"
 
 
 interface PostProps{
@@ -38,20 +39,26 @@ return(
 }
 
 export const getServerSideProps : GetServerSideProps = async ({req, params})=>{
+
     const session = await getSession({req})
+
+   
+    
    
     const { slug } = params
+
 
     if(!session?.activeSubscription){
         return{
             redirect:{
-                destination:'/',
+                destination:`/posts/preview/${slug}`,
                 permanent:false
             }
         }
     }
-
-    const response = await Client(req).getByUID('post', String(slug),{})
+    
+    const client = createClient()
+    const response = await client.getByUID('post', String(slug))
     const post = {
         slug,
         title: RichText.asText(response.data.title),

@@ -1,0 +1,8 @@
+{
+  "_latest": "0.3.8",
+  "apiEndpoint": "https://ignewser.prismic.io/api/v2",
+  "accessToken":"MC5ZcXo1MVJJQUFEVDR2VmZk.Wu-_vRJdde-_ve-_vS3vv73vv70o77-9fUHvv73vv71s77-977-9YnHvv71i77-977-9NkDvv71Ya0zvv70",
+  "libraries": [
+    "@/slices"
+  ]
+}

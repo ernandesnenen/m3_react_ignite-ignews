@@ -1,7 +1,6 @@
 import {  GetStaticProps, GetStaticPaths } from "next"
 import Link from "next/link"
 
-import { Client } from '../../../../utils/prismicHelpers'
 import {RichText} from 'prismic-dom'
 import stylespost from '../stylespost.module.scss'
 
@@ -9,6 +8,7 @@ import  Head from 'next/head'
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { useRouter } from "next/router"
+import { createClient } from "../../../../prismicio"
 
 
 interface PreviewPostProps{
@@ -22,14 +22,19 @@ interface PreviewPostProps{
 
 export default function PreviewPost({post}:PreviewPostProps){
     const{ data: session }= useSession()
+   
+
     const router = useRouter()
 
     useEffect(()=>{
         if(session?.activeSubscription) {
-            router.push(`/posts/${post.slug}`)
+            router.push(`/posts}`)
         }
 
+        {console.log('chegou aqui')}
+
     },[session])
+
 return(
     <>
     <Head>
@@ -60,17 +65,21 @@ return(
 export const getStaticPaths: GetStaticPaths = async()=>{
 return{
     paths:[
-       { params:{slug:"Obtendo o status de progresso do envio de dados com Axios"}}
+       { params:{slug:"obtendo-o-status-de-progresso-do-envio-de-dados-com-axios"}}
     ],
-    fallback: true
+    fallback: 'blocking'
 }
 }
+
 
 export const getStaticProps: GetStaticProps = async ({params})=>{
-  
+    
     const { slug } = params
-
-    const response = await Client().getByUID('post', String(slug),{})
+    console.log('slug',slug)
+    
+    const client = createClient()
+    const response = await client.getByUID('post', String(slug))
+    // const response = await Client().getByUID('post', String(slug),{})
     const post = {
         slug,
         title: RichText.asText(response.data.title),
